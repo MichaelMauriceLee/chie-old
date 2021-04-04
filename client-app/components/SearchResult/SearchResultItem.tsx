@@ -1,5 +1,4 @@
 import React from 'react';
-import { useQueryClient } from 'react-query';
 import { v4 as uuidv4 } from 'uuid';
 import useCreateNote from '../../hooks/useCreateNote';
 import useNotification from '../../hooks/useNotification';
@@ -32,8 +31,7 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({
       message: error.message,
     });
   };
-  const queryClient = useQueryClient();
-  const { mutate } = useCreateNote(queryClient, createSuccessNotification, createErrorNotification);
+  const { mutate } = useCreateNote(createSuccessNotification, createErrorNotification);
 
   const isWordAlreadyInAnki = (dictWord: JapaneseWord) => {
     if (dictWord.word && currentDeckNotes[dictWord.word]) {

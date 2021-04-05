@@ -6,7 +6,7 @@ const Info: React.FC = () => (
       Setup
     </h3>
     <div>
-      To allow Chie to add decks to Anki, first follow the instructions to install AnkiConnect
+      To allow Chie access to Anki, first follow the instructions to install AnkiConnect
       <a className="text-blue-500 visited:text-purple-500" href="https://foosoft.net/projects/anki-connect/"> here.</a>
     </div>
     <div>

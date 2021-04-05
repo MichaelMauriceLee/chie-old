@@ -45,6 +45,7 @@ const ImageDisplayControls: React.FC<ImageDisplayControlsProps> = ({
         <div className="space-y-1">
           <div className="space-x-1">
             <input
+              className="rounded focus:outline-none focus:ring focus:border-blue-500"
               type="checkbox"
               id="showLineBoxes"
               defaultChecked={showLineBoundingBox}
@@ -54,6 +55,7 @@ const ImageDisplayControls: React.FC<ImageDisplayControlsProps> = ({
           </div>
           <div className="space-x-1">
             <input
+              className="rounded focus:outline-none focus:ring focus:border-blue-500"
               type="checkbox"
               id="showWordBoxes"
               defaultChecked={showWordBoundingBox}
@@ -65,7 +67,8 @@ const ImageDisplayControls: React.FC<ImageDisplayControlsProps> = ({
 
         <div>
           <button
-            className="border border-black rounded md:py-2 md:px-4 py-1 px-2 hover:bg-blue-500 hover:border-blue-500 hover:text-white"
+            className="border border-black rounded md:py-2 md:px-4 py-1 px-2 hover:bg-blue-500 hover:border-blue-500 hover:text-white
+            focus:outline-none focus:ring focus:border-blue-500"
             type="button"
             onClick={clearImage}
           >

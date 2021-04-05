@@ -66,7 +66,7 @@ const DropArea:React.FC<DropAreaProps> = ({ setImage }) => {
   return (
     <div
       className={`flex flex-row items-center justify-center my-2 border-2 rounded-md border-dotted h-96 w-full ${isHovering ? 'bg-blue-500 text-white cursor-pointer' : ''}
-      hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white cursor-pointer`}
+      hover:bg-blue-500 hover:text-white rounded focus:outline-none focus:ring focus:border-blue-500 focus:bg-blue-500 focus:text-white cursor-pointer `}
       onPaste={onPhotoPaste}
       onDragEnter={onDragEnter}
       onDragLeave={onDragLeave}

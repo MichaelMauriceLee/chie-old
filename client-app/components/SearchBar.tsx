@@ -63,7 +63,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
       </div>
 
       <button
-        className="md:h-16 md:w-16 h-8 w-8 rounded-full hover:text-blue-500 ml-2"
+        className="md:h-16 md:w-16 h-8 w-8 rounded-full hover:text-blue-500 ml-2 focus:outline-none focus:ring focus:border-blue-500"
         type="button"
         aria-label="Find Text in Photo"
         onClick={() => { setShowImageArea((prev: boolean) => !prev); setShowInfo(false); }}

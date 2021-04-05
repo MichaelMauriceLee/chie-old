@@ -6,8 +6,8 @@ const Info: React.FC = () => (
       Setup
     </h3>
     <div>
-      To allow Chie access to Anki, first follow the instructions to install AnkiConnect
-      <a className="text-blue-500 visited:text-purple-500" href="https://foosoft.net/projects/anki-connect/"> here.</a>
+      To allow Chie access to Anki, first follow the instructions to install AnkiConnect&nbsp;
+      <a className="text-blue-500 visited:text-purple-500 rounded focus:outline-none focus:ring focus:border-blue-500" href="https://foosoft.net/projects/anki-connect/">here.</a>
     </div>
     <div>
       After installing AnkiConnect, replace the AnkiConnect config with the following:

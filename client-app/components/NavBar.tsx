@@ -10,9 +10,9 @@ const NavBar: React.FC<Props> = ({ setShowModal }) => {
   };
 
   return (
-    <div className="flex justify-between items-end">
+    <div className="flex justify-between items-end" style={{ marginTop: '4px' }}>
       <button
-        className="text-9xl hover:text-blue-500"
+        className="text-9xl hover:text-blue-500 rounded focus:outline-none focus:ring focus:border-blue-500"
         type="button"
         onClick={refreshPage}
       >
@@ -20,7 +20,7 @@ const NavBar: React.FC<Props> = ({ setShowModal }) => {
       </button>
 
       <button
-        className="hover:text-blue-500 rounded-full md:h-16 md:w-16 h-8 w-8 mt-4"
+        className="hover:text-blue-500 rounded-full md:h-16 md:w-16 h-8 w-8 mt-4 focus:outline-none focus:ring focus:border-blue-500"
         onClick={() => { setShowModal(true); }}
         aria-label="Settings"
         type="button"

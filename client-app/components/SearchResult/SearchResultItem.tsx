@@ -137,7 +137,7 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({
           {showAddCardBtn() ? (
             <div className="flex flex-row space-x-3">
               <button
-                className={`group rounded ${disableButton(searchResult.japanese[0], ButtonType.Kanji) ? 'opacity-50 cursor-default' : 'hover:text-blue-500 cursor-pointer'}`}
+                className={`group rounded focus:outline-none focus:ring focus:border-blue-500 ${disableButton(searchResult.japanese[0], ButtonType.Kanji) ? 'opacity-50 cursor-default' : 'hover:text-blue-500 cursor-pointer'}`}
                 type="button"
                 disabled={disableButton(searchResult.japanese[0], ButtonType.Kanji)}
                 onClick={() => { createCardAndAddToDeck(0, false); }}
@@ -155,7 +155,7 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({
               </button>
 
               <button
-                className={`group rounded ${disableButton(searchResult.japanese[0], ButtonType.Kana) ? 'opacity-50 cursor-default' : 'hover:text-blue-500 cursor-pointer'}`}
+                className={`group rounded focus:outline-none focus:ring focus:border-blue-500 ${disableButton(searchResult.japanese[0], ButtonType.Kana) ? 'opacity-50 cursor-default' : 'hover:text-blue-500 cursor-pointer'}`}
                 type="button"
                 disabled={disableButton(searchResult.japanese[0], ButtonType.Kana)}
                 onClick={() => { createCardAndAddToDeck(0, true); }}
@@ -230,7 +230,7 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({
                 {showAddCardBtn() && (
                 <div className="flex flex-row space-x-3">
                   <button
-                    className={`group rounded ${disableButton(searchResult.japanese[index + 1], ButtonType.Kanji) ? 'opacity-50 cursor-default' : 'hover:text-blue-500 cursor-pointer'}`}
+                    className={`group rounded focus:outline-none focus:ring focus:border-blue-500 ${disableButton(searchResult.japanese[index + 1], ButtonType.Kanji) ? 'opacity-50 cursor-default' : 'hover:text-blue-500 cursor-pointer'}`}
                     type="button"
                     disabled={disableButton(searchResult.japanese[index + 1], ButtonType.Kanji)}
                     onClick={() => { createCardAndAddToDeck(index + 1, false); }}
@@ -248,7 +248,7 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({
                   </button>
 
                   <button
-                    className={`group rounded ${disableButton(searchResult.japanese[index + 1], ButtonType.Kana) ? 'opacity-50 cursor-default' : 'hover:text-blue-500 cursor-pointer'}`}
+                    className={`group rounded focus:outline-none focus:ring focus:border-blue-500 ${disableButton(searchResult.japanese[index + 1], ButtonType.Kana) ? 'opacity-50 cursor-default' : 'hover:text-blue-500 cursor-pointer'}`}
                     type="button"
                     disabled={disableButton(searchResult.japanese[index + 1], ButtonType.Kana)}
                     onClick={() => { createCardAndAddToDeck(index + 1, true); }}

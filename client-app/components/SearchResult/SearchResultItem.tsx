@@ -1,6 +1,5 @@
 import React from 'react';
 import { useQueryClient } from 'react-query';
-import { v4 as uuidv4 } from 'uuid';
 import useCreateNote from '../../hooks/useCreateNote';
 import useNotification from '../../hooks/useNotification';
 import { Note } from '../../models/Note';
@@ -209,7 +208,8 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({
             {searchResult.japanese.slice(1).map((sR, index) => (
               <div
                 className="flex flex-row justify-between items-center"
-                key={uuidv4()}
+                // eslint-disable-next-line react/no-array-index-key
+                key={index}
               >
                 <div className="flex flex-row">
                   <div className="font-bold pr-1">

@@ -78,15 +78,13 @@ const Home: React.FC = () => {
 
         {showImageArea && <ImageArea image={image} setImage={setImage} setKeyword={setKeyword} />}
 
-        {searchResults && (
-          <SearchResultList
-            searchResults={searchResults}
-            isLoading={isLoading}
-            isConnectedToAnki={isConnectedToAnki}
-            currentDeckName={currentDeckName}
-            currentDeckNotes={currentDeckNotes ?? {}}
-          />
-        )}
+        <SearchResultList
+          searchResults={searchResults ?? []}
+          isLoading={isLoading}
+          isConnectedToAnki={isConnectedToAnki}
+          currentDeckName={currentDeckName}
+          currentDeckNotes={currentDeckNotes ?? {}}
+        />
 
         {showInfo && <Info />}
       </main>

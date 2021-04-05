@@ -6,6 +6,7 @@ import SearchBar from '../components/SearchBar';
 import SearchResultList from '../components/SearchResult/SearchResultList';
 import Modal from '../components/Modal/Modal';
 import ImageArea from '../components/ImageArea/ImageArea';
+import Info from '../components/Info';
 import useDeckNames from '../hooks/useDeckNames';
 import useCurrentDeckNotes from '../hooks/useCurrentDeckNotes';
 import useSearchResult from '../hooks/useSearchResult';
@@ -17,8 +18,9 @@ const Home: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [isConnectedToAnki, setIsConnectedToAnki] = useState(false);
   const [currentDeckName, setCurrentDeckName] = useState<string | null>(typeof window !== 'undefined' ? localStorage.getItem('currentDeck') : null);
-  const [showImageArea, setShowImageArea] = useState<boolean>(false);
+  const [showImageArea, setShowImageArea] = useState(false);
   const [image, setImage] = useState<File | null>(null);
+  const [showInfo, setShowInfo] = useState(true);
 
   const dispatch = useNotification();
   const createErrorNotification = (error: Error) => {
@@ -71,17 +73,22 @@ const Home: React.FC = () => {
           setKeyword={setKeyword}
           setShowImageArea={setShowImageArea}
           fetchSearchResults={refetch}
+          setShowInfo={setShowInfo}
         />
 
         {showImageArea && <ImageArea image={image} setImage={setImage} setKeyword={setKeyword} />}
 
-        <SearchResultList
-          searchResults={searchResults ?? []}
-          isLoading={isLoading}
-          isConnectedToAnki={isConnectedToAnki}
-          currentDeckName={currentDeckName}
-          currentDeckNotes={currentDeckNotes ?? {}}
-        />
+        {searchResults && (
+          <SearchResultList
+            searchResults={searchResults}
+            isLoading={isLoading}
+            isConnectedToAnki={isConnectedToAnki}
+            currentDeckName={currentDeckName}
+            currentDeckNotes={currentDeckNotes ?? {}}
+          />
+        )}
+
+        {showInfo && <Info />}
       </main>
     </div>
   );

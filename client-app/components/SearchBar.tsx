@@ -6,10 +6,11 @@ interface SearchBarProps {
   setKeyword: (param: string) => void;
   setShowImageArea: (callback: (prev: boolean) => boolean) => void;
   fetchSearchResults: () => void
+  setShowInfo: (param: boolean) => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({
-  keyword, setKeyword, setShowImageArea, fetchSearchResults,
+  keyword, setKeyword, setShowImageArea, fetchSearchResults, setShowInfo,
 }) => {
   const searchBarRef = useRef<HTMLInputElement>(null);
 
@@ -30,6 +31,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(event.target.value);
+    setShowInfo(false);
   };
 
   useEffect(() => {
@@ -64,7 +66,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
         className="md:h-16 md:w-16 h-8 w-8 rounded-full hover:text-blue-500 ml-2"
         type="button"
         aria-label="Find Text in Photo"
-        onClick={() => { setShowImageArea((prev: boolean) => !prev); }}
+        onClick={() => { setShowImageArea((prev: boolean) => !prev); setShowInfo(false); }}
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
           <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />

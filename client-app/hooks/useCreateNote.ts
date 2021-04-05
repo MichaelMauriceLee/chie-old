@@ -1,5 +1,5 @@
 import {
-  useMutation, UseMutationResult, useQueryClient,
+  QueryClient, useMutation, UseMutationResult,
 } from 'react-query';
 import { Note } from '../models/Note';
 import { postNote } from '../services/agent';
@@ -14,6 +14,7 @@ const addNoteToCurrentDeck = async (card: Note) => {
 };
 
 const useCreateNote = (
+  queryClient: QueryClient,
   successCallback?: () => void,
   errorCallback?: (error: Error) => void,
 ): UseMutationResult<string, Error, Note, unknown> => useMutation(
@@ -23,7 +24,6 @@ const useCreateNote = (
       if (successCallback) {
         successCallback();
       }
-      const queryClient = useQueryClient();
       queryClient.invalidateQueries('currentDeckNotes');
     },
     onError: (error: Error) => { if (errorCallback) { errorCallback(error); } },

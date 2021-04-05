@@ -12,7 +12,7 @@ const Info: React.FC = () => (
     <div>
       After installing AnkiConnect, replace the AnkiConnect config with the following:
     </div>
-    <div className="p-4 bg-gray-200">
+    <div className="rounded p-4 bg-gray-200">
       <div>&#123;</div>
       <div>&emsp;&quot;apiKey&quot;: null</div>
       <div>&emsp;&quot;apiLogPath&quot;: null</div>

@@ -14,12 +14,12 @@ After installing, replace the AnkiConnect config with the following:
     "webCorsOriginList": [
         "http://localhost",
         "http://localhost:3000",
-        "https://brave-grass-06ab5cd1e.azurestaticapps.net"
+        "https://www.chie.app"
     ]
 }
 ```
 
-You can now use https://brave-grass-06ab5cd1e.azurestaticapps.net/ or run the next.js app locally.
+You can now use https://www.chie.app/ or run the next.js app locally.
 
 Make sure to keep Anki running in the background as you use the site.
 

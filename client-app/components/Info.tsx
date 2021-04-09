@@ -22,7 +22,7 @@ const Info: React.FC = () => (
       <div>&emsp;&quot;webCorsOriginList&quot;: [</div>
       <div>&emsp;&emsp;&quot;http://localhost&quot;</div>
       <div>&emsp;&emsp;&quot;http://localhost:3000&quot;</div>
-      <div>&emsp;&emsp;&quot;https://brave-grass-06ab5cd1e.azurestaticapps.net&quot;</div>
+      <div>&emsp;&emsp;&quot;https://www.chie.app&quot;</div>
       <div>&emsp;]</div>
       <div>&#125;</div>
     </div>

@@ -1,14 +1,14 @@
 import { useQuery, UseQueryResult } from 'react-query';
-import speechsdk, { ResultReason } from 'microsoft-cognitiveservices-speech-sdk';
+import { SpeechConfig, SpeechSynthesizer, ResultReason } from 'microsoft-cognitiveservices-speech-sdk';
 import { getSpeechToken } from '../services/agent';
 
 const readText = async (text: string) => {
-  const speechConfig = speechsdk.SpeechConfig.fromAuthorizationToken(
+  const speechConfig = SpeechConfig.fromAuthorizationToken(
     localStorage.getItem('speechToken') ?? '',
     localStorage.getItem('speechRegion') ?? '',
   );
   speechConfig.speechRecognitionLanguage = 'ja-JP';
-  const synthesizer = new speechsdk.SpeechSynthesizer(speechConfig);
+  const synthesizer = new SpeechSynthesizer(speechConfig);
   synthesizer.speakTextAsync(text, (result) => {
     if (result.reason === ResultReason.Canceled) {
       throw new Error('Text to speech failed');

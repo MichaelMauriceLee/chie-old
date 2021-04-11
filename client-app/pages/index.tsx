@@ -40,7 +40,7 @@ const Home: React.FC = () => {
 
   const {
     data: translationResults, isLoading: isTranslationLoading, refetch: fetchTranslation,
-  } = useTranslation(keyword, 'en', 'ja', createErrorNotification);
+  } = useTranslation(keyword, createErrorNotification);
 
   const { data: deckList } = useDeckNames(setIsConnectedToAnki);
   const { data: currentDeckNotes } = useCurrentDeckNotes(

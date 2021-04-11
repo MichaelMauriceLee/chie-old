@@ -3,11 +3,7 @@ import { useQuery, UseQueryResult } from 'react-query';
 import { TranslateLineRequest, TranslateLineResponse } from '../models/Translation';
 import { getTranslation, getTranslationToken } from '../services/agent';
 
-const fetchTranslation = async (
-  sentence: string,
-  to: string,
-  from?: string,
-) => {
+const fetchTranslation = async (sentence: string) => {
   try {
     const { token } = await getTranslationToken();
     const payload: TranslateLineRequest[] = [
@@ -15,8 +11,9 @@ const fetchTranslation = async (
         Text: sentence,
       },
     ];
-    const data = await getTranslation(payload, token, to, from);
-    return data;
+    const [jpToEnTranslation, enToJpTranslation] = await Promise.all([getTranslation(payload, token, 'en', 'ja'), getTranslation(payload, token, 'ja', 'en')]);
+    if (jpToEnTranslation.map((x) => x.translations.map((y) => y.text)).join('') !== sentence) return jpToEnTranslation;
+    return enToJpTranslation;
   } catch (err) {
     if (err.response) {
       throw err;
@@ -28,11 +25,9 @@ const fetchTranslation = async (
 
 const useTranslation = (
   sentence: string,
-  to: string,
-  from?: string,
   errorCallback?: (error: AxiosError) => void,
 ): UseQueryResult<TranslateLineResponse[], AxiosError> => useQuery(['translation', sentence],
-  () => fetchTranslation(sentence, to, from),
+  () => fetchTranslation(sentence),
   {
     enabled: false,
     onError: (error: AxiosError) => { if (errorCallback) { errorCallback(error); } },

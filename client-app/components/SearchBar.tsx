@@ -52,45 +52,45 @@ const SearchBar: React.FC<SearchBarProps> = ({
 
   return (
     <div className="flex flex-row justify-between items-center mt-4">
-      <div className="outline relative border-2 focus-within:border-blue-500 flex-grow">
-        <input
-          className="block text-lg p-4 w-full appearance-none focus: outline-none bg-transparent"
-          id="searchInput"
-          type="text"
-          placeholder=" "
-          ref={searchBarRef}
-          value={keyword}
-          onChange={onInputChange}
-          onKeyUp={onKeyUp}
-        />
+      <div className="flex flex-row items-center outline border-2 focus-within:border-blue-500 flex-grow">
+        <div className="relative flex-grow">
+          <input
+            className="block text-lg p-4 w-full appearance-none focus: outline-none bg-transparent"
+            id="searchInput"
+            type="text"
+            placeholder=" "
+            ref={searchBarRef}
+            value={keyword}
+            onChange={onInputChange}
+            onKeyUp={onKeyUp}
+          />
 
-        <label
-          className="absolute p-4 text-lg top-0 duration-300 -z-1 origin-0 bg-white"
-          htmlFor="searchInput"
-        >
-          Search
-        </label>
+          <label
+            className="absolute p-4 text-lg top-0 duration-300 -z-1 origin-0 bg-white"
+            htmlFor="searchInput"
+          >
+            Search
+          </label>
+        </div>
 
         {keyword && (
-          <div>
+          <div className="flex flex-row items-center">
             <button
-              className="rounded-full absolute right-16 top-1/2 transform -translate-y-2/4 z-10
-            hover:text-blue-500 focus:outline-none focus:ring focus:border-blue-500"
+              className="rounded-full hover:text-blue-500 focus:outline-none focus:ring focus:border-blue-500 ml-1"
               type="button"
               onClick={() => { useTextToSpeech(keyword, createErrorNotification); }}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" viewBox="0 0 20 20" fill="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="md:h-10 md:w-10 h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clipRule="evenodd" />
               </svg>
             </button>
 
             <button
-              className="rounded-full absolute right-5 top-1/2 transform -translate-y-2/4 z-10
-            hover:text-blue-500 focus:outline-none focus:ring focus:border-blue-500"
+              className="rounded-full hover:text-blue-500 focus:outline-none focus:ring focus:border-blue-500 mx-1"
               type="button"
               onClick={() => { setKeyword(''); }}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" viewBox="0 0 20 20" fill="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="md:h-10 md:w-10 h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
             </button>

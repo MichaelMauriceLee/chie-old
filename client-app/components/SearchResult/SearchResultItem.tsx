@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useQueryClient } from 'react-query';
 import useCreateNote from '../../hooks/useCreateNote';
 import useNotification from '../../hooks/useNotification';
@@ -24,8 +24,6 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({
 }) => {
   const isMobile = !!navigator.userAgent.match(/iphone|android|blackberry/ig) || false;
 
-  const [textReading, setTextReading] = useState('');
-
   const dispatch = useNotification();
   const createSuccessNotification = () => {
     dispatch({
@@ -41,10 +39,8 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({
   };
   const queryClient = useQueryClient();
   const { mutate } = useCreateNote(queryClient, createSuccessNotification, createErrorNotification);
-  const { refetch } = useTextToSpeech(textReading);
   const readText = (reading: string) => {
-    setTextReading(reading);
-    refetch();
+    useTextToSpeech(reading, createErrorNotification);
   };
 
   const isWordAlreadyInAnki = (dictWord: JapaneseWord, type?: ButtonType) => {

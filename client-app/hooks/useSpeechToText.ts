@@ -4,13 +4,10 @@ import {
 } from 'microsoft-cognitiveservices-speech-sdk';
 import { getSpeechToken } from '../services/agent';
 
-const speechConfig = SpeechConfig.fromAuthorizationToken(
-  localStorage.getItem('speechToken') ?? '',
-  localStorage.getItem('speechRegion') ?? '',
-);
-speechConfig.speechRecognitionLanguage = 'ja-JP';
-
 const fetchTextFromMic = async (setDisplayText: (params: string) => void) => {
+  const { token, region } = await getSpeechToken();
+  const speechConfig = SpeechConfig.fromAuthorizationToken(token, region);
+  speechConfig.speechRecognitionLanguage = 'ja-JP';
   const audioConfig = AudioConfig.fromDefaultMicrophoneInput();
   const recognizer = new SpeechRecognizer(speechConfig, audioConfig);
   setDisplayText('Speak into your microphone...');
@@ -28,6 +25,9 @@ const fetchTextFromMic = async (setDisplayText: (params: string) => void) => {
 };
 
 const fetchTextFromFile = async (setDisplayText: (params: string) => void, audioFile: File) => {
+  const { token, region } = await getSpeechToken();
+  const speechConfig = SpeechConfig.fromAuthorizationToken(token, region);
+  speechConfig.speechRecognitionLanguage = 'ja-JP';
   const audioConfig = AudioConfig.fromWavFileInput(audioFile);
   const recognizer = new SpeechRecognizer(speechConfig, audioConfig);
 

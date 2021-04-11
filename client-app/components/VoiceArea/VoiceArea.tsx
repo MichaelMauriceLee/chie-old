@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 
 const VoiceArea: React.FC = () => {
-  const [displayText] = useState('Upload a file or speak into your microphone');
+  const [displayText] = useState('Upload a file or speak into your microphone (coming soon!)');
   return (
     <div className="flex mt-2 border rounded">
-      <div className="h-96 p-1 overflow-auto">
-        {displayText}
-      </div>
       <div className="w-20">
-        <div />
-        <div className="mt-2">
+        <div>
+          Use Microphone
+        </div>
+        <div>
+          Upload WAV file
+        </div>
+        {/* <div className="mt-2">
           <label htmlFor="audio-file">
             <input
               type="file"
@@ -17,7 +19,10 @@ const VoiceArea: React.FC = () => {
               style={{ display: 'none' }}
             />
           </label>
-        </div>
+        </div> */}
+      </div>
+      <div className="h-96 p-1 overflow-auto">
+        {displayText}
       </div>
     </div>
   );

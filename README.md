@@ -51,7 +51,9 @@ Next, cd into /api and create a file called 'local.settings.json' and copy the f
     "CV_NAME": {cv_name},
     "CV_KEY": {cv_key},
     "SPEECH_REGION": {speech_region},
-    "SPEECH_KEY": {speech_key}
+    "SPEECH_KEY": {speech_key},
+    "TRANSLATION_REGION": {translation_region},
+    "TRANSLATION_KEY": {translation_key}
   }
 }
 ```

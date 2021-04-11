@@ -13,6 +13,8 @@ import useSearchResult from '../hooks/useSearchResult';
 import useNotification from '../hooks/useNotification';
 import { NotificationType } from '../models/Notification';
 import VoiceArea from '../components/VoiceArea/VoiceArea';
+import useTranslation from '../hooks/useTranslation';
+import Translation from '../components/Translation/Translation';
 
 const Home: React.FC = () => {
   const [keyword, setKeyword] = useState('');
@@ -33,13 +35,22 @@ const Home: React.FC = () => {
   };
 
   const {
-    data: searchResults, isLoading, refetch,
+    data: searchResults, isLoading: isDictionaryLoading, refetch: fetchSearchResults,
   } = useSearchResult(keyword, createErrorNotification);
+
+  const {
+    data: translationResults, isLoading: isTranslationLoading, refetch: fetchTranslation,
+  } = useTranslation(keyword, 'en', 'ja', createErrorNotification);
 
   const { data: deckList } = useDeckNames(setIsConnectedToAnki);
   const { data: currentDeckNotes } = useCurrentDeckNotes(
     setIsConnectedToAnki, currentDeckName ?? '',
   );
+
+  const searchWord = () => {
+    fetchSearchResults();
+    fetchTranslation();
+  };
 
   // if there isnt any currentDeckName, assign one
   // (will either be there or will be undefined since couldn't get one)
@@ -75,16 +86,21 @@ const Home: React.FC = () => {
           setKeyword={setKeyword}
           setShowImageArea={setShowImageArea}
           setShowVoiceArea={setShowVoiceArea}
-          fetchSearchResults={refetch}
+          fetchSearchResults={searchWord}
           setShowInfo={setShowInfo}
         />
 
         {showImageArea && <ImageArea image={image} setImage={setImage} setKeyword={setKeyword} />}
         {showVoiceArea && <VoiceArea />}
 
+        <Translation
+          sentence={translationResults ?? []}
+          isLoading={isTranslationLoading}
+        />
+
         <SearchResultList
           searchResults={searchResults ?? []}
-          isLoading={isLoading}
+          isLoading={isDictionaryLoading}
           isConnectedToAnki={isConnectedToAnki}
           currentDeckName={currentDeckName}
           currentDeckNotes={currentDeckNotes ?? {}}

@@ -17,7 +17,7 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <link rel="manifest" href="manifest.json" />
-          <meta name="description" content="Next generation Japanese dictionary with Anki Integration and text recognition" />
+          <meta name="description" content="Next generation Japanese dictionary with Anki Integration, text recognition, and speech recognition" />
           <script data-ad-client="ca-pub-2188571361088905" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" />
         </Head>
         <body>

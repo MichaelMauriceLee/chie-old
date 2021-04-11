@@ -48,9 +48,10 @@ Next, cd into /api and create a file called 'local.settings.json' and copy the f
   "Values": {
     "FUNCTIONS_WORKER_RUNTIME": "node",
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-    "JISHO_BASE_URL": {jisho_base_url},
-    "CV_BASE_URL": {cv_base_url},
-    "CV_KEY": {cv_key}}
+    "CV_NAME": {cv_name},
+    "CV_KEY": {cv_key},
+    "SPEECH_REGION": {speech_region},
+    "SPEECH_KEY": {speech_key}
   }
 }
 ```

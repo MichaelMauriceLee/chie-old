@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQueryClient } from 'react-query';
 import useCreateNote from '../../hooks/useCreateNote';
 import useNotification from '../../hooks/useNotification';
+import useTextToSpeech from '../../hooks/useTextToSpeech';
 import { Note } from '../../models/Note';
 import { NotificationType } from '../../models/Notification';
 import { JapaneseWord, SearchResult } from '../../models/SearchResult';
@@ -23,6 +24,8 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({
 }) => {
   const isMobile = !!navigator.userAgent.match(/iphone|android|blackberry/ig) || false;
 
+  const [textReading, setTextReading] = useState('');
+
   const dispatch = useNotification();
   const createSuccessNotification = () => {
     dispatch({
@@ -38,6 +41,11 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({
   };
   const queryClient = useQueryClient();
   const { mutate } = useCreateNote(queryClient, createSuccessNotification, createErrorNotification);
+  const { refetch } = useTextToSpeech(textReading);
+  const readText = (reading: string) => {
+    setTextReading(reading);
+    refetch();
+  };
 
   const isWordAlreadyInAnki = (dictWord: JapaneseWord, type?: ButtonType) => {
     switch (type) {
@@ -128,10 +136,21 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({
     <div className={`grid md:grid-cols-3 grid-cols-1 gap-4 rounded-md border ${isSomeWordAlreadyInAnki() ? 'bg-gray-100' : ''}`}>
       <div className="col-span-1 md:pl-7 md:pr-0 md:pt-2 md:pb-2 px-2 pt-2">
         <div className="flex flex-row justify-between items-center">
-          <div className="text-5xl font-bold">
-            {searchResult.japanese[0].word
-              ? searchResult.japanese[0].word
-              : searchResult.japanese[0].reading}
+          <div className="flex flex-row items-center space-x-2">
+            <div className="text-5xl font-bold">
+              {searchResult.japanese[0].word
+                ? searchResult.japanese[0].word
+                : searchResult.japanese[0].reading}
+            </div>
+            <button
+              className="rounded-full focus:outline-none focus:ring focus:border-blue-500 hover:text-blue-500"
+              type="button"
+              onClick={() => { readText(searchResult.japanese[0].reading); }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clipRule="evenodd" />
+              </svg>
+            </button>
           </div>
 
           {showAddCardBtn() ? (
@@ -211,7 +230,7 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({
                 // eslint-disable-next-line react/no-array-index-key
                 key={index}
               >
-                <div className="flex flex-row">
+                <div className="flex flex-row space-x-2 items-center">
                   <div className="font-bold pr-1">
                     {sR.word}
                   </div>
@@ -226,6 +245,15 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({
                       {sR.reading}
                     </div>
                   )}
+                  <button
+                    className="rounded-full focus:outline-none focus:ring focus:border-blue-500 hover:text-blue-500"
+                    type="button"
+                    onClick={() => { readText(sR.reading); }}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clipRule="evenodd" />
+                    </svg>
+                  </button>
                 </div>
                 {showAddCardBtn() && (
                 <div className="flex flex-row space-x-3">

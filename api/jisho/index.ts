@@ -4,7 +4,7 @@ import axios from 'axios';
 // eslint-disable-next-line import/extensions
 import execute from '../execute';
 
-const jishoSearchWordBaseUrl = `${process.env.JISHO_BASE_URL}/search/words?keyword=`;
+const jishoSearchWordBaseUrl = 'https://jisho.org/api/v1/search/words?keyword=';
 
 const httpTrigger: AzureFunction = async (context: Context, req: HttpRequest): Promise<void> => {
   await execute(async () => {
@@ -15,7 +15,10 @@ const httpTrigger: AzureFunction = async (context: Context, req: HttpRequest): P
     const url = jishoSearchWordBaseUrl + encodeURIComponent(keyword);
     const { data } = await axios.get(url);
     return data;
-  }, context, 'Jisho error.', 'Failed searching for dictionary entries.');
+  },
+  context,
+  'Jisho error.',
+  'Failed searching for dictionary entries.');
 };
 
 export default httpTrigger;

@@ -4,7 +4,7 @@ import axios from 'axios';
 // eslint-disable-next-line import/extensions
 import execute from '../execute';
 
-const analysisResultsUrl = `${process.env.CV_BASE_URL}/vision/v3.2-preview.3/read/analyzeResults`;
+const analysisResultsUrl = `https://${process.env.CV_NAME}.cognitiveservices.azure.com/vision/v3.2-preview.3/read/analyzeResults`;
 
 const httpTrigger: AzureFunction = async (context: Context): Promise<void> => {
   await execute(async () => {

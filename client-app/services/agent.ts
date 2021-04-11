@@ -6,6 +6,7 @@ import {
   HttpMethods,
   AnkiConnectActionType,
   ocrBaseUrl,
+  speechTokenUrl,
 } from './constants';
 import {
   AddCardRequest,
@@ -107,4 +108,10 @@ export const getAnalysisResults = async (
     throw new Error('Read failed');
   }
   return null;
+};
+
+export const getSpeechToken = async (): Promise<void> => {
+  const { data } = await axios.get(speechTokenUrl);
+  localStorage.setItem('speechToken', data.token);
+  localStorage.setItem('speechRegion', data.region);
 };

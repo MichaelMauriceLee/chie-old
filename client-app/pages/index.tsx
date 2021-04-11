@@ -12,6 +12,7 @@ import useCurrentDeckNotes from '../hooks/useCurrentDeckNotes';
 import useSearchResult from '../hooks/useSearchResult';
 import useNotification from '../hooks/useNotification';
 import { NotificationType } from '../models/Notification';
+import VoiceArea from '../components/VoiceArea/VoiceArea';
 
 const Home: React.FC = () => {
   const [keyword, setKeyword] = useState('');
@@ -19,6 +20,7 @@ const Home: React.FC = () => {
   const [isConnectedToAnki, setIsConnectedToAnki] = useState(false);
   const [currentDeckName, setCurrentDeckName] = useState<string | null>(typeof window !== 'undefined' ? localStorage.getItem('currentDeck') : null);
   const [showImageArea, setShowImageArea] = useState(false);
+  const [showVoiceArea, setShowVoiceArea] = useState(false);
   const [image, setImage] = useState<File | null>(null);
   const [showInfo, setShowInfo] = useState(true);
 
@@ -72,11 +74,13 @@ const Home: React.FC = () => {
           keyword={keyword}
           setKeyword={setKeyword}
           setShowImageArea={setShowImageArea}
+          setShowVoiceArea={setShowVoiceArea}
           fetchSearchResults={refetch}
           setShowInfo={setShowInfo}
         />
 
         {showImageArea && <ImageArea image={image} setImage={setImage} setKeyword={setKeyword} />}
+        {showVoiceArea && <VoiceArea />}
 
         <SearchResultList
           searchResults={searchResults ?? []}

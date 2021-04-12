@@ -126,8 +126,8 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({
   };
 
   return (
-    <div className={`grid md:grid-cols-3 grid-cols-1 gap-4 rounded-md border ${isSomeWordAlreadyInAnki() ? 'bg-gray-100' : ''}`}>
-      <div className="col-span-1 md:pl-7 md:pr-0 md:pt-2 md:pb-2 px-2 pt-2">
+    <div className={`grid md:grid-cols-5 grid-cols-1 gap-4 rounded-md border ${isSomeWordAlreadyInAnki() ? 'bg-gray-100' : ''}`}>
+      <div className="col-span-2 md:pl-7 md:pr-0 md:pt-2 md:pb-2 px-2 pt-2">
         <div className="flex flex-row justify-between items-center">
           <div className="flex flex-row items-center space-x-2">
             <div className="text-5xl font-bold">

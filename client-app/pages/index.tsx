@@ -93,18 +93,21 @@ const Home: React.FC = () => {
         {showImageArea && <ImageArea image={image} setImage={setImage} setKeyword={setKeyword} />}
         {showVoiceArea && <VoiceArea />}
 
-        <Translation
-          sentence={translationResults ?? []}
-          isLoading={isTranslationLoading}
-        />
-
-        <SearchResultList
-          searchResults={searchResults ?? []}
-          isLoading={isDictionaryLoading}
-          isConnectedToAnki={isConnectedToAnki}
-          currentDeckName={currentDeckName}
-          currentDeckNotes={currentDeckNotes ?? {}}
-        />
+        <div className="grid md:grid-cols-4 grid-cols-1 gap-3">
+          <div className="col-span-3">
+            <SearchResultList
+              searchResults={searchResults ?? []}
+              isLoading={isDictionaryLoading}
+              isConnectedToAnki={isConnectedToAnki}
+              currentDeckName={currentDeckName}
+              currentDeckNotes={currentDeckNotes ?? {}}
+            />
+          </div>
+          <Translation
+            sentence={translationResults ?? []}
+            isLoading={isTranslationLoading}
+          />
+        </div>
 
         {showInfo && <Info />}
       </main>

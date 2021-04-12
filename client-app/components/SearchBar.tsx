@@ -16,7 +16,7 @@ interface SearchBarProps {
 const SearchBar: React.FC<SearchBarProps> = ({
   keyword, setKeyword, setShowImageArea, setShowVoiceArea, fetchSearchResults, setShowInfo,
 }) => {
-  const searchBarRef = useRef<HTMLInputElement>(null);
+  const searchBarRef = useRef<HTMLTextAreaElement>(null);
 
   const dispatch = useNotification();
   const createErrorNotification = (error: Error) => {
@@ -26,8 +26,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
     });
   };
 
-  const onKeyUp = (evt: React.KeyboardEvent<HTMLInputElement>) => {
+  const onKeyDown = (evt: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (evt.key === 'Enter') {
+      evt.preventDefault();
       searchBarRef.current?.blur();
     }
   };
@@ -41,9 +42,23 @@ const SearchBar: React.FC<SearchBarProps> = ({
     [],
   );
 
-  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setKeyword(event.target.value);
     setShowInfo(false);
+  };
+
+  const resizeTextArea = () => {
+    if (searchBarRef.current && searchBarRef.current.style) {
+      searchBarRef.current.style.height = '';
+      searchBarRef.current.style.height = `${searchBarRef.current.scrollHeight}px`;
+    }
+  };
+
+  const clearSearchBar = () => {
+    if (searchBarRef.current) {
+      searchBarRef.current.style.height = '';
+    }
+    setKeyword('');
   };
 
   useEffect(() => {
@@ -54,15 +69,17 @@ const SearchBar: React.FC<SearchBarProps> = ({
     <div className="flex flex-row justify-between items-center mt-4">
       <div className="flex flex-row items-center outline border-2 focus-within:border-blue-500 flex-grow">
         <div className="relative flex-grow">
-          <input
-            className="block text-lg p-4 w-full appearance-none focus: outline-none bg-transparent"
+          <textarea
+            className="block text-lg p-4 w-full appearance-none focus:outline-none bg-transparent"
             id="searchInput"
-            type="text"
             placeholder=" "
             ref={searchBarRef}
             value={keyword}
             onChange={onInputChange}
-            onKeyUp={onKeyUp}
+            onKeyDown={onKeyDown}
+            style={{ resize: 'none' }}
+            rows={1}
+            onInput={resizeTextArea}
           />
 
           <label
@@ -88,7 +105,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
             <button
               className="rounded-full hover:text-blue-500 focus:outline-none focus:ring focus:border-blue-500 mx-1"
               type="button"
-              onClick={() => { setKeyword(''); }}
+              onClick={clearSearchBar}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="md:h-10 md:w-10 h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />

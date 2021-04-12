@@ -11,6 +11,7 @@ const fetchTranslation = async (sentence: string) => {
         Text: sentence,
       },
     ];
+    // TODO return empty if it doesnt recognize the language
     const [jpToEnTranslation, enToJpTranslation] = await Promise.all([getTranslation(payload, token, 'en', 'ja'), getTranslation(payload, token, 'ja', 'en')]);
     if (jpToEnTranslation.map((x) => x.translations.map((y) => y.text)).join('') !== sentence) return jpToEnTranslation;
     return enToJpTranslation;

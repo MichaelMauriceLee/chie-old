@@ -1,59 +1,62 @@
-import { useQuery, UseQueryResult } from 'react-query';
 import {
   ResultReason, SpeechConfig, AudioConfig, SpeechRecognizer,
 } from 'microsoft-cognitiveservices-speech-sdk';
+import { useState } from 'react';
 import { getSpeechToken } from '../services/agent';
 
-const fetchTextFromMic = async (setDisplayText: (params: string) => void) => {
-  const { token, region } = await getSpeechToken();
-  const speechConfig = SpeechConfig.fromAuthorizationToken(token, region);
-  speechConfig.speechRecognitionLanguage = 'ja-JP';
-  const audioConfig = AudioConfig.fromDefaultMicrophoneInput();
-  const recognizer = new SpeechRecognizer(speechConfig, audioConfig);
-  setDisplayText('Speak into your microphone...');
+interface UseSpeechToText {
+  displayText: string;
+  fetchTextFromMic: () => Promise<void>;
+  fetchTextFromFile: (audioFile: File) => Promise<void>;
+}
 
-  recognizer.recognizeOnceAsync((result) => {
-    let displayText;
-    if (result.reason === ResultReason.RecognizedSpeech) {
-      displayText = `RECOGNIZED: Text=${result.text}`;
-    } else {
-      displayText = 'ERROR: Speech was cancelled or could not be recognized. Ensure your microphone is working properly.';
+const useSpeechToText = (): UseSpeechToText => {
+  const [displayText, setDisplayText] = useState('Upload an audio file or speak into your microphone');
+
+  const fetchTextFromMic = async () => {
+    const { token, region } = await getSpeechToken();
+    const speechConfig = SpeechConfig.fromAuthorizationToken(token, region);
+    speechConfig.speechRecognitionLanguage = 'ja-JP';
+    const audioConfig = AudioConfig.fromDefaultMicrophoneInput();
+    const recognizer = new SpeechRecognizer(speechConfig, audioConfig);
+    setDisplayText('Speak into your microphone...');
+
+    recognizer.recognizeOnceAsync((result) => {
+      if (result.reason === ResultReason.RecognizedSpeech) {
+        setDisplayText(`RECOGNIZED: ${result.text}`);
+        return;
+      }
+      setDisplayText('ERROR: Speech was cancelled or could not be recognized. Ensure your microphone is working properly.');
+    });
+  };
+
+  const fetchTextFromFile = async (audioFile: File) => {
+    if (audioFile.name.split('.').pop() !== 'wav') {
+      setDisplayText('ERROR: File must be .wav sound file.');
+      return;
     }
+    setDisplayText(`${audioFile.name} size=${audioFile.size} bytes`);
 
-    setDisplayText(displayText);
-  });
+    const { token, region } = await getSpeechToken();
+    const speechConfig = SpeechConfig.fromAuthorizationToken(token, region);
+    speechConfig.speechRecognitionLanguage = 'ja-JP';
+    const audioConfig = AudioConfig.fromWavFileInput(audioFile);
+    const recognizer = new SpeechRecognizer(speechConfig, audioConfig);
+
+    recognizer.recognizeOnceAsync((result) => {
+      if (result.reason === ResultReason.RecognizedSpeech) {
+        setDisplayText(`RECOGNIZED: ${result.text}`);
+        return;
+      }
+      setDisplayText('ERROR: Speech was cancelled or could not be recognized.');
+    });
+  };
+
+  return {
+    displayText,
+    fetchTextFromMic,
+    fetchTextFromFile,
+  };
 };
-
-const fetchTextFromFile = async (setDisplayText: (params: string) => void, audioFile: File) => {
-  const { token, region } = await getSpeechToken();
-  const speechConfig = SpeechConfig.fromAuthorizationToken(token, region);
-  speechConfig.speechRecognitionLanguage = 'ja-JP';
-  const audioConfig = AudioConfig.fromWavFileInput(audioFile);
-  const recognizer = new SpeechRecognizer(speechConfig, audioConfig);
-
-  recognizer.recognizeOnceAsync((result) => {
-    let displayText;
-    if (result.reason === ResultReason.RecognizedSpeech) {
-      displayText = `RECOGNIZED: Text=${result.text}`;
-    } else {
-      displayText = 'ERROR: Speech was cancelled or could not be recognized.';
-    }
-
-    setDisplayText(displayText);
-  });
-};
-
-const useSpeechToText = (
-  setDisplayText: (params: string) => void,
-  audioFile?: File,
-): UseQueryResult<string[], Error> => useQuery('speechToText',
-  () => {
-    if (audioFile) return fetchTextFromFile(setDisplayText, audioFile);
-    return fetchTextFromMic(setDisplayText);
-  },
-  {
-    onError: getSpeechToken,
-    enabled: false,
-  });
 
 export default useSpeechToText;

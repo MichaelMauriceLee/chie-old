@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
 
 interface DropAreaProps {
-  setImage: (param: File) => void
+  setFile: (param: File | null) => void
 }
 
-const DropArea:React.FC<DropAreaProps> = ({ setImage }) => {
+const DropArea:React.FC<DropAreaProps> = ({ setFile }) => {
   const isMobile = !!navigator.userAgent.match(/iphone|android|blackberry/ig) || false;
   const [isHovering, setIsHovering] = useState<boolean>();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -32,7 +32,7 @@ const DropArea:React.FC<DropAreaProps> = ({ setImage }) => {
     // @ts-expect-error window is defined
     const { files } = evt.clipboardData || window.clipboardData;
     if (files.length !== 0) {
-      setImage(files[0]);
+      setFile(files[0]);
     }
   };
 
@@ -50,7 +50,7 @@ const DropArea:React.FC<DropAreaProps> = ({ setImage }) => {
   const onDrop = (evt: React.DragEvent<HTMLDivElement>) => {
     evt.preventDefault();
     if (evt.dataTransfer.files.length !== 0) {
-      setImage(evt.dataTransfer.files[0]);
+      setFile(evt.dataTransfer.files[0]);
     }
   };
 
@@ -58,7 +58,7 @@ const DropArea:React.FC<DropAreaProps> = ({ setImage }) => {
     if (fileInputRef.current) {
       const { files } = fileInputRef.current;
       if (files && files.length !== 0) {
-        setImage(files[0]);
+        setFile(files[0]);
       }
     }
   };

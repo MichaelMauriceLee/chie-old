@@ -1,6 +1,6 @@
 {
   "name": "chie",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "SET NODE_ENV='development' & node server.js",
@@ -16,6 +16,7 @@
     "next-pwa": "^5.0.5",
     "postcss": "^8.2.5",
     "react": "17.0.1",
+    "react-cropper": "^2.1.8",
     "react-dom": "17.0.1",
     "react-query": "^3.9.8",
     "tailwindcss": "^2.0.2",

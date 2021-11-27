@@ -7,7 +7,7 @@ import { NotificationType } from '../../models/Notification';
 import LoadingIndicator from './LoadingIndicator';
 
 interface ImageDisplayProps {
-  image: File;
+  image: string;
   showLineBoundingBox: boolean;
   showWordBoundingBox: boolean;
   setKeyword: (params: string) => void;
@@ -163,15 +163,9 @@ const ImageDisplay: React.FC<ImageDisplayProps> = ({
     if (canvas && canvasWrapper) {
       canvas.height = canvasWrapper.getBoundingClientRect().height;
       canvas.width = canvasWrapper.getBoundingClientRect().width;
-      const fr = new FileReader();
-      fr.onload = () => {
-        if (fr.result) {
-          imgRef.current.onload = drawImageAndBoundingBoxes;
-          imgRef.current.src = fr.result.toString();
-          setIsCanvasVisible(true);
-        }
-      };
-      fr.readAsDataURL(image);
+      imgRef.current.onload = drawImageAndBoundingBoxes;
+      imgRef.current.src = image;
+      setIsCanvasVisible(true);
     }
   }, [canvas]);
 

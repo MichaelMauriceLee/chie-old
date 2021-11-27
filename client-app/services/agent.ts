@@ -92,12 +92,8 @@ export const getSearchResults = async (
   return data.data;
 };
 
-export const postAnalyzeImageRequest = async (image: File): Promise<string> => {
-  const { data } = await axios.post(ocrBaseUrl, image, {
-    headers: {
-      'Content-Type': 'application/octet-stream',
-    },
-  });
+export const postAnalyzeImageRequest = async (image: string): Promise<string> => {
+  const { data } = await axios.post(ocrBaseUrl, { image });
   return data;
 };
 
@@ -137,7 +133,8 @@ export const getSpeechToken = async (): Promise<TokenResponse> => {
       const { token, region } = res.data;
       cookie.set('speech-token', `${region}:${token}`, { maxAge: 540, path: '/' });
       return { token, region };
-    } catch (err) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
       throw new Error(err.message ?? err);
     }
   } else {
@@ -156,7 +153,8 @@ export const getTranslationToken = async (): Promise<TokenResponse> => {
       const { token, region } = res.data;
       cookie.set('translation-token', `${region}:${token}`, { maxAge: 540, path: '/' });
       return { token, region };
-    } catch (err) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
       throw new Error(err.message ?? err);
     }
   } else {

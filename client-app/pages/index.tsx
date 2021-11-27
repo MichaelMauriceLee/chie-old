@@ -23,7 +23,6 @@ const Home: React.FC = () => {
   const [currentDeckName, setCurrentDeckName] = useState<string | null>(typeof window !== 'undefined' ? localStorage.getItem('currentDeck') : null);
   const [showImageArea, setShowImageArea] = useState(false);
   const [showVoiceArea, setShowVoiceArea] = useState(false);
-  const [image, setImage] = useState<File | null>(null);
   const [showInfo, setShowInfo] = useState(true);
 
   const dispatch = useNotification();
@@ -90,7 +89,7 @@ const Home: React.FC = () => {
           setShowInfo={setShowInfo}
         />
 
-        {showImageArea && <ImageArea image={image} setImage={setImage} setKeyword={setKeyword} />}
+        {showImageArea && <ImageArea setKeyword={setKeyword} />}
         {showVoiceArea && <VoiceArea />}
 
         <div className="grid md:grid-cols-4 grid-cols-1 gap-2">

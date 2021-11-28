@@ -76,3 +76,13 @@ Navigate to client-app and run the following command:
 ```bash
 yarn storybook
 ```
+
+## Cypress
+
+Cypress is an open source tool that allows for end-to-end testing.
+
+Ensure both the function apps and the client app are running.  Navigate to client-app and run the following command:
+
+```bash
+yarn cypress
+```

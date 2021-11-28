@@ -29,6 +29,6 @@ const useSearchResult = (searchWord: string, initialSearchResults?: SearchResult
       }
       return true;
     },
-});
+  });
 
 export default useSearchResult;

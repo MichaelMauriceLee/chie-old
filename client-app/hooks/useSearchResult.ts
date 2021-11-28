@@ -7,7 +7,8 @@ export const fetchSearchResults = async (word: string | null) : Promise<SearchRe
   try {
     const data = await getSearchResults(word ?? '');
     return data;
-  } catch (err) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
     if (err.response) {
       throw err;
     } else {

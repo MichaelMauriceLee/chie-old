@@ -43,6 +43,8 @@ jobs:
 
       - name: Cypress E2E Tests
         uses: cypress-io/github-action@v1
+        with:
+          working-directory: client-app
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'

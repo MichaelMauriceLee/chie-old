@@ -29,8 +29,8 @@ jobs:
         with:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
           resourceGroupName: ${{ secrets.AZURE_RG }}
-          template: ./Infrastructure/main.bicep
-          parameters: ./Infrastructure/azuredeploy.parameters.json
+          template: ./infrastructure/main.bicep
+          parameters: ./infrastructure/azuredeploy.parameters.json
           failOnStdErr: false
 
   build_and_deploy_job:

@@ -18,6 +18,7 @@ resource staticWebApp 'Microsoft.Web/staticSites@2021-02-01' = {
   name: name
   location: location
   properties: {
+    provider: 'GitHub'
     repositoryUrl: repositoryUrl
     branch: branch
     repositoryToken: repositoryToken

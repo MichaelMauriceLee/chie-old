@@ -24,7 +24,7 @@ resource speechServiceAccount 'Microsoft.CognitiveServices/accounts@2021-04-30' 
 resource translatorAccount 'Microsoft.CognitiveServices/accounts@2021-04-30' = {
   name: translatorAccountName
   location: location
-  kind: 'Translator'
+  kind: 'TextTranslation'
   sku: {
     name: 'F0'
   }

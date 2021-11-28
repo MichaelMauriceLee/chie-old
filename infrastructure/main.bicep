@@ -25,20 +25,20 @@ module cognitiveServiceAccounts 'cognitiveservices.bicep' = {
   }
 }
 
-module staticWebApp 'staticwebapp.bicep' = {
-  name: 'staticWebApp'
-  scope: resourceGroup()
-  params: {
-    sku: webAppSku
-    skuCode: webAppSkuCode
-    appLocation: appLocation
-    apiLocation: apiLocation
-    appArtifactLocation: appArtifactLocation
-    repositoryUrl: repositoryUrl
-    branch: branch
-    appSettings: appSettings
-    location: location
-    repositoryToken: repositoryToken
-    name: webAppName
-  }
-}
+// module staticWebApp 'staticwebapp.bicep' = {
+//   name: 'staticWebApp'
+//   scope: resourceGroup()
+//   params: {
+//     sku: webAppSku
+//     skuCode: webAppSkuCode
+//     appLocation: appLocation
+//     apiLocation: apiLocation
+//     appArtifactLocation: appArtifactLocation
+//     repositoryUrl: repositoryUrl
+//     branch: branch
+//     appSettings: appSettings
+//     location: location
+//     repositoryToken: repositoryToken
+//     name: webAppName
+//   }
+// }

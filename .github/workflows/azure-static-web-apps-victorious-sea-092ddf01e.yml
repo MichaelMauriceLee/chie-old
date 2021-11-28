@@ -32,7 +32,7 @@ jobs:
           output_location: "out" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
 
-      - name: Initialize test variables
+      - name: Initialize Test Variables
         shell: bash
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
@@ -42,9 +42,10 @@ jobs:
           echo "::set-env name=CYPRESS_BASE_URL::${CYPRESS_BASE_URL}"
 
       - name: Cypress E2E Tests
-        uses: cypress-io/github-action@v1
+        uses: cypress-io/github-action@v2
         with:
           working-directory: client-app
+          build: yarn build
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 

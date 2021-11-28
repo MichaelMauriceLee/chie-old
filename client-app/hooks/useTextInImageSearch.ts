@@ -25,7 +25,7 @@ const fetchTextInImageSearchResults = async (image: string) => {
   }
 };
 
-const useTextInImageSearch = (image: string, errorCallback?: (error: AxiosError) => void): UseQueryResult<ImageSearchResult[], AxiosError> => useQuery(['textInImage', `${image.name}-${image.size}-${image.lastModified}`],
+const useTextInImageSearch = (image: string, errorCallback?: (error: AxiosError) => void): UseQueryResult<ImageSearchResult[], AxiosError> => useQuery(['textInImage', image],
   () => fetchTextInImageSearchResults(image),
   {
     enabled: false,

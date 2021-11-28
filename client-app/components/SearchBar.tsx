@@ -1,15 +1,14 @@
 import React, { useCallback, useRef, useEffect } from 'react';
 import debounce from 'lodash.debounce';
 import useNotification from '../hooks/useNotification';
-import { NotificationType } from '../models/Notification';
 import useTextToSpeech from '../hooks/useTextToSpeech';
 
 interface SearchBarProps {
-  keyword?: string;
+  keyword: string;
   setKeyword: (param: string) => void;
   setShowImageArea: (callback: (prev: boolean) => boolean) => void;
   setShowVoiceArea: (callback: (prev: boolean) => boolean) => void;
-  fetchSearchResults: () => void
+  fetchSearchResults: () => void;
   setShowInfo: (param: boolean) => void;
 }
 
@@ -18,13 +17,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
   const searchBarRef = useRef<HTMLTextAreaElement>(null);
 
-  const dispatch = useNotification();
-  const createErrorNotification = (error: Error) => {
-    dispatch({
-      type: NotificationType.Error,
-      message: error.message,
-    });
-  };
+  const { createErrorNotification } = useNotification();
 
   const onKeyDown = (evt: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (evt.key === 'Enter') {

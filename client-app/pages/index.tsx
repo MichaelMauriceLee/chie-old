@@ -1,63 +1,36 @@
-import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
-
+import React, { useState } from 'react';
+import ImageArea from '../components/ImageArea/ImageArea';
+import Info from '../components/Info';
 import NavBar from '../components/NavBar';
 import SearchBar from '../components/SearchBar';
 import SearchResultList from '../components/SearchResult/SearchResultList';
-import Modal from '../components/Modal/Modal';
-import ImageArea from '../components/ImageArea/ImageArea';
-import Info from '../components/Info';
-import useDeckNames from '../hooks/useDeckNames';
-import useCurrentDeckNotes from '../hooks/useCurrentDeckNotes';
-import useSearchResult from '../hooks/useSearchResult';
-import useNotification from '../hooks/useNotification';
-import { NotificationType } from '../models/Notification';
-import VoiceArea from '../components/VoiceArea/VoiceArea';
-import useTranslation from '../hooks/useTranslation';
 import Translation from '../components/Translation/Translation';
+import VoiceArea from '../components/VoiceArea/VoiceArea';
+import useNotification from '../hooks/useNotification';
+import useSearchResult from '../hooks/useSearchResult';
+import useTranslation from '../hooks/useTranslation';
 
 const Home: React.FC = () => {
   const [keyword, setKeyword] = useState('');
-  const [showModal, setShowModal] = useState(false);
-  const [isConnectedToAnki, setIsConnectedToAnki] = useState(false);
-  const [currentDeckName, setCurrentDeckName] = useState<string | null>(typeof window !== 'undefined' ? localStorage.getItem('currentDeck') : null);
+  const [showInfo, setShowInfo] = useState(true);
   const [showImageArea, setShowImageArea] = useState(false);
   const [showVoiceArea, setShowVoiceArea] = useState(false);
-  const [showInfo, setShowInfo] = useState(true);
 
-  const dispatch = useNotification();
-  const createErrorNotification = (error: Error) => {
-    dispatch({
-      type: NotificationType.Error,
-      message: error.message,
-    });
-  };
+  const { createErrorNotification } = useNotification();
 
   const {
     data: searchResults, isLoading: isDictionaryLoading, refetch: fetchSearchResults,
-  } = useSearchResult(keyword, [], createErrorNotification);
+  } = useSearchResult(keyword, createErrorNotification);
 
   const {
     data: translationResults, isLoading: isTranslationLoading, refetch: fetchTranslation,
   } = useTranslation(keyword, createErrorNotification);
 
-  const { data: deckList } = useDeckNames(setIsConnectedToAnki);
-  const { data: currentDeckNotes } = useCurrentDeckNotes(
-    setIsConnectedToAnki, currentDeckName ?? '',
-  );
-
   const searchWord = () => {
     fetchSearchResults();
     fetchTranslation();
   };
-
-  // if there isnt any currentDeckName, assign one
-  // (will either be there or will be undefined since couldn't get one)
-  useEffect(() => {
-    if (!currentDeckName && deckList && deckList.length !== 0) {
-      setCurrentDeckName(deckList[0]);
-    }
-  }, [isConnectedToAnki]);
 
   return (
     <div>
@@ -67,18 +40,7 @@ const Home: React.FC = () => {
       </Head>
 
       <main className="md:px-72 px-2">
-        {showModal
-          && (
-            <Modal
-              isConnectedToAnki={isConnectedToAnki}
-              setShowModal={setShowModal}
-              showModal={showModal}
-              currentDeckName={currentDeckName}
-              setCurrentDeckName={setCurrentDeckName}
-              deckList={deckList ?? []}
-            />
-          )}
-        <NavBar setShowModal={setShowModal} />
+        <NavBar />
 
         <SearchBar
           keyword={keyword}
@@ -88,7 +50,6 @@ const Home: React.FC = () => {
           fetchSearchResults={searchWord}
           setShowInfo={setShowInfo}
         />
-
         {showImageArea && <ImageArea setKeyword={setKeyword} />}
         {showVoiceArea && <VoiceArea />}
 
@@ -97,9 +58,6 @@ const Home: React.FC = () => {
             <SearchResultList
               searchResults={searchResults ?? []}
               isLoading={isDictionaryLoading}
-              isConnectedToAnki={isConnectedToAnki}
-              currentDeckName={currentDeckName}
-              currentDeckNotes={currentDeckNotes ?? {}}
             />
           </div>
           <div className="col-span-1">

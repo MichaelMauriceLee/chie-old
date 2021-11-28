@@ -1,10 +1,14 @@
 import React from 'react';
+import useModal from '../hooks/useModal';
 
-interface Props {
-  setShowModal: (param: boolean) => void;
-}
+const NavBar: React.FC = () => {
+  const toggleModal = useModal();
+  const onClick = () => {
+    if (toggleModal) {
+      toggleModal();
+    }
+  };
 
-const NavBar: React.FC<Props> = ({ setShowModal }) => {
   const refreshPage = () => {
     window.location.reload();
   };
@@ -21,7 +25,7 @@ const NavBar: React.FC<Props> = ({ setShowModal }) => {
 
       <button
         className="hover:text-blue-500 rounded-full md:h-16 md:w-16 h-8 w-8 mt-4 focus:outline-none focus:ring focus:border-blue-500"
-        onClick={() => { setShowModal(true); }}
+        onClick={onClick}
         aria-label="Settings"
         type="button"
       >

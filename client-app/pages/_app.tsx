@@ -3,15 +3,24 @@ import '../styles/globals.css';
 import React from 'react';
 import { AppProps } from 'next/app';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import NotificationProvider from '../components/Notifications/NotificationProvider';
+import NotificationProvider from '../components/Provider/NotificationProvider';
+import ModalProvider from '../components/Provider/ModalProvider';
+import SettingsProvider from '../components/Provider/SettingsProvider';
+import AnkiConnectionProvider from '../components/Provider/AnkiConnectionProvider';
 
 const queryClient = new QueryClient();
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => (
   <QueryClientProvider client={queryClient}>
-    <NotificationProvider>
-      <Component {...pageProps} />
-    </NotificationProvider>
+    <AnkiConnectionProvider>
+      <SettingsProvider>
+        <NotificationProvider>
+          <ModalProvider>
+            <Component {...pageProps} />
+          </ModalProvider>
+        </NotificationProvider>
+      </SettingsProvider>
+    </AnkiConnectionProvider>
   </QueryClientProvider>
 );
 

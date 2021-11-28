@@ -6,14 +6,11 @@ import SearchResultItemSkeleton from './SearchResultItemSkeleton';
 interface SearchResultListProps {
   searchResults: SearchResult[];
   isLoading: boolean;
-  isConnectedToAnki: boolean;
-  currentDeckName: string | null;
-  currentDeckNotes: Record<string, boolean>;
 }
 
 const SearchResultList: React.FC<SearchResultListProps> = ({
   // eslint-disable-next-line max-len
-  searchResults, isLoading, isConnectedToAnki, currentDeckName, currentDeckNotes,
+  searchResults, isLoading,
 }) => (
   <div className="mt-2 space-y-4">
     { isLoading
@@ -28,9 +25,6 @@ const SearchResultList: React.FC<SearchResultListProps> = ({
         <SearchResultItem
           key={JSON.stringify(searchResult)}
           searchResult={searchResult}
-          isConnectedToAnki={isConnectedToAnki}
-          currentDeckName={currentDeckName}
-          currentDeckNotes={currentDeckNotes}
         />
       ))}
   </div>

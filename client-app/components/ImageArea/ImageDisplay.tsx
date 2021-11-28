@@ -1,9 +1,7 @@
-import { AxiosError } from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import useNotification from '../../hooks/useNotification';
 import useTextInImageSearch from '../../hooks/useTextInImageSearch';
 import { Word } from '../../models/ImageSearchResult';
-import { NotificationType } from '../../models/Notification';
 import LoadingIndicator from './LoadingIndicator';
 
 interface ImageDisplayProps {
@@ -30,13 +28,7 @@ const ImageDisplay: React.FC<ImageDisplayProps> = ({
   const imgRef = useRef<HTMLImageElement>(new Image());
   const tempWordArrayRef = useRef<Word[]>([]);
 
-  const dispatch = useNotification();
-  const createErrorNotification = (error:AxiosError) => {
-    dispatch({
-      type: NotificationType.Error,
-      message: error.response?.data ?? error.message,
-    });
-  };
+  const { createErrorNotification } = useNotification();
 
   const {
     data: imageSearchResult, isLoading, refetch,

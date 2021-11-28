@@ -1,17 +1,16 @@
 import React from 'react';
 import { useQueryClient } from 'react-query';
-import useCreateNote from '../../hooks/useCreateNote';
+import useAnkiInfo from '../../hooks/anki/useAnkiInfo';
+import useCreateNote from '../../hooks/anki/useNoteMutation';
 import useNotification from '../../hooks/useNotification';
+import useSettings from '../../hooks/useSettings';
 import useTextToSpeech from '../../hooks/useTextToSpeech';
 import { Note } from '../../models/Note';
-import { NotificationType } from '../../models/Notification';
 import { JapaneseWord, SearchResult } from '../../models/SearchResult';
+import isMobile from '../../utils/isMobile';
 
 interface SearchResultItemProps {
   searchResult: SearchResult;
-  isConnectedToAnki: boolean;
-  currentDeckName: string | null;
-  currentDeckNotes: Record<string, boolean>;
 }
 
 enum ButtonType {
@@ -19,26 +18,25 @@ enum ButtonType {
   Kana = 'kana',
 }
 
-const SearchResultItem: React.FC<SearchResultItemProps> = ({
-  searchResult, isConnectedToAnki, currentDeckName, currentDeckNotes,
-}) => {
-  const isMobile = !!navigator.userAgent.match(/iphone|android|blackberry/ig) || false;
+const SearchResultItem: React.FC<SearchResultItemProps> = ({ searchResult }) => {
+  const {
+    isConnectedToAnki,
+    currentDeckNotes,
+  } = useAnkiInfo();
 
-  const dispatch = useNotification();
-  const createSuccessNotification = () => {
-    dispatch({
-      type: NotificationType.Success,
-      message: `Successfully added card to deck: ${currentDeckName}`,
-    });
+  const { state } = useSettings();
+
+  const { createSuccessNotification, createErrorNotification } = useNotification();
+  const createAddedNoteNotification = () => {
+    createSuccessNotification(state && `Successfully added card to deck: ${state.currentDeckName}`);
   };
-  const createErrorNotification = (error: Error) => {
-    dispatch({
-      type: NotificationType.Error,
-      message: error.message,
-    });
-  };
+
   const queryClient = useQueryClient();
-  const { mutate } = useCreateNote(queryClient, createSuccessNotification, createErrorNotification);
+  const { mutate } = useCreateNote(
+    queryClient,
+    createAddedNoteNotification,
+    createErrorNotification,
+  );
 
   const isWordAlreadyInAnki = (dictWord: JapaneseWord, type?: ButtonType) => {
     switch (type) {
@@ -46,22 +44,22 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({
         if (!dictWord.word) {
           return true;
         }
-        if (currentDeckNotes[dictWord.word]) {
+        if (currentDeckNotes && currentDeckNotes[dictWord.word]) {
           return true;
         }
         return false;
       }
       case (ButtonType.Kana): {
-        if (currentDeckNotes[dictWord.reading]) {
+        if (currentDeckNotes && currentDeckNotes[dictWord.reading]) {
           return true;
         }
         return false;
       }
       default: {
-        if (dictWord.word && currentDeckNotes[dictWord.word]) {
+        if (currentDeckNotes && dictWord.word && currentDeckNotes[dictWord.word]) {
           return true;
         }
-        if (currentDeckNotes[dictWord.reading]) {
+        if (currentDeckNotes && currentDeckNotes[dictWord.reading]) {
           return true;
         }
         return false;
@@ -103,7 +101,7 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({
     });
 
     const newNote: Note = {
-      deckName: currentDeckName ?? '',
+      deckName: state ? state.currentDeckName : '',
       modelName: 'Basic',
       fields: {
         Front: kanaOnly ? searchResult.japanese[i].reading : searchResult.japanese[i].word,
@@ -210,7 +208,7 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({
         {searchResult.jlpt
           && (
             <div className="text-blue-700 pt-1">
-              {searchResult.jlpt.join(', ').replaceAll('-', ' ')}
+              {searchResult.jlpt.join(', ').replace(/-/g, ' ')}
             </div>
           )}
 

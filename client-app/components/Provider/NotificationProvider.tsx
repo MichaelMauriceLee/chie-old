@@ -1,5 +1,5 @@
-import React, { createContext, useReducer } from 'react';
-import Notification from './Notification';
+import React, { createContext, Dispatch, useReducer } from 'react';
+import Notification from '../Notification/Notification';
 import { NotificationActionType, NotificationType } from '../../models/Notification';
 
 export interface NotificationAction {
@@ -13,7 +13,7 @@ export interface NotificationModel {
   type?: NotificationType;
 }
 
-export const NotificationContext = createContext<React.Dispatch<NotificationAction> | null>(null);
+export const NotificationContext = createContext<Dispatch<NotificationAction> | null>(null);
 
 const NotificationProvider: React.FC = ({ children }) => {
   const reducer = (state: NotificationModel[], action: NotificationAction): NotificationModel[] => {
@@ -28,7 +28,6 @@ const NotificationProvider: React.FC = ({ children }) => {
   };
 
   const [state, dispatch] = useReducer(reducer, []);
-
   return (
     <NotificationContext.Provider value={dispatch}>
       <div className="fixed md:top-4 md:right-4 md:transform-none top-1 right-1/2 transform translate-x-1/2 w-72 space-y-1 z-10">

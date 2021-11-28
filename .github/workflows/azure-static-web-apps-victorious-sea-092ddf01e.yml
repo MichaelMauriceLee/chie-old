@@ -34,6 +34,8 @@ jobs:
 
       - name: Initialize test variables
         shell: bash
+        with:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
         run: |
           CYPRESS_BASE_URL="https://victorious-sea-092ddf01e.azurestaticapps.net"
           if [ -n "${{ github.event.pull_request.number }}" ]; then CYPRESS_BASE_URL="https://victorious-sea-092ddf01e-${{ github.event.pull_request.number }}.westus2.azurestaticapps.net" ; fi

@@ -8,7 +8,7 @@ resource computerVisionAccount 'Microsoft.CognitiveServices/accounts@2021-04-30'
   location: location
   kind: 'ComputerVision'
   sku: {
-    name: 'F0'
+    name: 'S1'
   }
 }
 

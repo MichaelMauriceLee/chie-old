@@ -9,7 +9,8 @@ const fetchDeckNames = async (setIsConnectedToAnki: (params: boolean) => void) =
     const data = await getDeckNames();
     setIsConnectedToAnki(true);
     return data;
-  } catch (error) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
     setIsConnectedToAnki(false);
     throw new Error(error.message ?? 'Failed getting deck names');
   }

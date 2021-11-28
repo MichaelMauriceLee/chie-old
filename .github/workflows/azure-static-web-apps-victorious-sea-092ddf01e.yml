@@ -34,7 +34,7 @@ jobs:
 
       - name: Initialize test variables
         shell: bash
-        with:
+        env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
         run: |
           CYPRESS_BASE_URL="https://victorious-sea-092ddf01e.azurestaticapps.net"

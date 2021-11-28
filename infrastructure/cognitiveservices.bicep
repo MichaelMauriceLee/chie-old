@@ -1,19 +1,22 @@
 param location string
+param computerVisionAccountName string
+param speechServiceAccountName string
+param translatorAccountName string
 
 resource computerVisionAccount 'Microsoft.CognitiveServices/accounts@2021-04-30' = {
-  name: 'chiecorecv'
+  name: computerVisionAccountName
   location: location
   kind: 'ComputerVision'
 }
 
 resource speechServiceAccount 'Microsoft.CognitiveServices/accounts@2021-04-30' = {
-  name: 'chiecorespeech'
+  name: speechServiceAccountName
   location: location
-  kind: 'Speech Service'
+  kind: 'SpeechService'
 }
 
 resource translatorAccount 'Microsoft.CognitiveServices/accounts@2021-04-30' = {
-  name: 'chiecoretranslator'
+  name: translatorAccountName
   location: location
   kind: 'Translator'
 }

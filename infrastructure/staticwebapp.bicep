@@ -2,6 +2,7 @@ param sku string
 param skuCode string
 param repositoryUrl string
 param branch string
+param name string
 
 @secure()
 param repositoryToken string
@@ -14,7 +15,7 @@ param appSettings object
 param location string
 
 resource staticWebApp 'Microsoft.Web/staticSites@2021-02-01' = {
-  name: 'chiecoreapp'
+  name: name
   location: location
   properties: {
     repositoryUrl: repositoryUrl

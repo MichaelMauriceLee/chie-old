@@ -9,12 +9,19 @@ param repositoryUrl string
 param branch string
 param appArtifactLocation string
 param appSettings object
+param computerVisionAccountName string
+param speechServiceAccountName string
+param translatorAccountName string
+param webAppName string
 
 module cognitiveServiceAccounts 'cognitiveservices.bicep' = {
   name: 'cognitiveServiceAccounts'
   scope: resourceGroup()
   params: {
     location: location
+    computerVisionAccountName: computerVisionAccountName
+    speechServiceAccountName: speechServiceAccountName
+    translatorAccountName: translatorAccountName
   }
 }
 
@@ -32,5 +39,6 @@ module staticWebApp 'staticwebapp.bicep' = {
     appSettings: appSettings
     location: location
     repositoryToken: repositoryToken
+    name: webAppName
   }
 }

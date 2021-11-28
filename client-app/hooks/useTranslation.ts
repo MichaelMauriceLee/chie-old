@@ -15,7 +15,8 @@ const fetchTranslation = async (sentence: string) => {
     const [jpToEnTranslation, enToJpTranslation] = await Promise.all([getTranslation(payload, token, 'en', 'ja'), getTranslation(payload, token, 'ja', 'en')]);
     if (jpToEnTranslation.map((x) => x.translations.map((y) => y.text)).join('') !== sentence) return jpToEnTranslation;
     return enToJpTranslation;
-  } catch (err) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
     if (err.response) {
       throw err;
     } else {

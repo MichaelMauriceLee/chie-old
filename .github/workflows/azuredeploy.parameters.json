@@ -1,0 +1,47 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceGroupName": {
+            "value": "ChieCore"
+        },
+        "location": {
+            "value": "West US 2"
+        },
+        "sku": {
+            "value": "Free"
+        },
+        "skucode": {
+            "value": "Free"
+        },
+        "repositoryUrl": {
+            "value": "https://github.com/MichaelMauriceLee/chie"
+        },
+        "branch": {
+            "value": "main"
+        },
+        "repositoryToken": {
+            "value": "${{ secrets.REPO_TOKEN }}"
+        },
+        "appLocation": {
+            "value": "/client-app"
+        },
+        "apiLocation": {
+            "value": "/api"
+        },
+        "appArtifactLocation": {
+            "value": "out"
+        },
+        "appSettings": {
+            "value": {
+                "APPINSIGHTS_INSTRUMENTATIONKEY": "value 1",
+                "CV_KEY": "value 2",
+                "CV_NAME": "value 2",
+                "SPEECH_KEY": "value 1",
+                "SPEECH_REGION": "value 2",
+                "TRANSLATION_KEY": "value 2",
+                "TRANSLATION_REGION": "value 2"
+            }
+        }
+    }
+}

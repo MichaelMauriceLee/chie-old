@@ -45,6 +45,8 @@ jobs:
         uses: cypress-io/github-action@v1
         with:
           working-directory: client-app
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'

@@ -10,11 +10,11 @@ on:
       - main
 
 jobs:
-  build_and_deploy_job:
+  deploy_infrastructure_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     environment: Production
-    name: Build and Deploy Job
+    name: Deploy Infrastructure Job
     steps:
       - uses: actions/checkout@v2
         with:
@@ -29,10 +29,16 @@ jobs:
         with:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
           resourceGroupName: ${{ secrets.AZURE_RG }}
-          template: ./main.bicep
-          parameters: ./azuredeploy.parameters.json
+          template: ./Infrastructure/main.bicep
+          parameters: ./Infrastructure/azuredeploy.parameters.json
           failOnStdErr: false
 
+  build_and_deploy_job:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    runs-on: ubuntu-latest
+    environment: Production
+    name: Build And Deploy Code Job
+    steps:
       - name: Build And Deploy Code
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v0.0.1-preview

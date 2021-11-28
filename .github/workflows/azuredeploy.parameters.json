@@ -21,7 +21,7 @@
             "value": "main"
         },
         "repositoryToken": {
-            "value": "${{ secrets.REPO_TOKEN }}"
+            "value": "${{ secrets.GITHUB_TOKEN }}"
         },
         "appLocation": {
             "value": "/client-app"

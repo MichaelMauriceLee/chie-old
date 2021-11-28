@@ -18,7 +18,8 @@ const fetchCurrentDeckNotes = async (
     });
     setIsConnectedToAnki(true);
     return dict;
-  } catch (error) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
     setIsConnectedToAnki(false);
     throw new Error(error.message ?? 'Failed getting current deck notes');
   }

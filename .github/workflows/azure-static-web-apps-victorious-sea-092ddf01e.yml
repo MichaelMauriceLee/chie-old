@@ -41,11 +41,19 @@ jobs:
           if [ -n "${{ github.event.pull_request.number }}" ]; then CYPRESS_BASE_URL="https://victorious-sea-092ddf01e-${{ github.event.pull_request.number }}.westus2.azurestaticapps.net" ; fi
           echo "::set-env name=CYPRESS_BASE_URL::${CYPRESS_BASE_URL}"
 
-      - name: Cypress E2E Tests
+      - name: Cypress Install
         uses: cypress-io/github-action@v2
         with:
+          runTests: false
           working-directory: client-app
-          build: yarn build
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+
+      - name: Run Cypress E2E Tests
+        uses: cypress-io/github-action@v2
+        with:
+          install: false
+          working-directory: client-app
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 

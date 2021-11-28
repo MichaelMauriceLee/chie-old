@@ -15,7 +15,8 @@ const fetchTextInImageSearchResults = async (image: string) => {
       results = await getAnalysisResults(analysisId);
     }
     return results;
-  } catch (err) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
     if (err.response) {
       throw err;
     } else {

@@ -8,10 +8,10 @@
         "location": {
             "value": "West US 2"
         },
-        "sku": {
+        "webAppSku": {
             "value": "Free"
         },
-        "skucode": {
+        "webAppSkuCode": {
             "value": "Free"
         },
         "repositoryUrl": {

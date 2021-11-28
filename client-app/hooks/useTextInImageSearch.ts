@@ -3,7 +3,7 @@ import { useQuery, UseQueryResult } from 'react-query';
 import { ImageSearchResult } from '../models/ImageSearchResult';
 import { postAnalyzeImageRequest, getAnalysisResults } from '../services/agent';
 
-const fetchTextInImageSearchResults = async (image: File) => {
+const fetchTextInImageSearchResults = async (image: string) => {
   try {
     const analysisId = await postAnalyzeImageRequest(image);
     let results;
@@ -24,7 +24,7 @@ const fetchTextInImageSearchResults = async (image: File) => {
   }
 };
 
-const useTextInImageSearch = (image: File, errorCallback?: (error: AxiosError) => void): UseQueryResult<ImageSearchResult[], AxiosError> => useQuery(['textInImage', `${image.name}-${image.size}-${image.lastModified}`],
+const useTextInImageSearch = (image: string, errorCallback?: (error: AxiosError) => void): UseQueryResult<ImageSearchResult[], AxiosError> => useQuery(['textInImage', `${image.name}-${image.size}-${image.lastModified}`],
   () => fetchTextInImageSearchResults(image),
   {
     enabled: false,

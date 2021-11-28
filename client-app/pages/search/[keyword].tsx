@@ -1,28 +1,39 @@
+import { Head } from 'next/document';
 import React, { useEffect, useState } from 'react';
-import Head from 'next/head';
+import { GetStaticPaths, GetStaticProps } from 'next';
+import { ParsedUrlQuery } from 'querystring';
+import ImageArea from '../../components/ImageArea/ImageArea';
+import Info from '../../components/Info';
+import Modal from '../../components/Modal/Modal';
+import NavBar from '../../components/NavBar';
+import SearchBar from '../../components/SearchBar';
+import SearchResultList from '../../components/SearchResult/SearchResultList';
+import Translation from '../../components/Translation/Translation';
+import VoiceArea from '../../components/VoiceArea/VoiceArea';
+import useCurrentDeckNotes from '../../hooks/useCurrentDeckNotes';
+import useDeckNames from '../../hooks/useDeckNames';
+import useNotification from '../../hooks/useNotification';
+import useSearchResult, { fetchSearchResults as fetchInitialSearchResults } from '../../hooks/useSearchResult';
+import useTranslation from '../../hooks/useTranslation';
+import { NotificationType } from '../../models/Notification';
+import wordList from '../../utils/wordList';
+import { SearchResult } from '../../models/SearchResult';
 
-import NavBar from '../components/NavBar';
-import SearchBar from '../components/SearchBar';
-import SearchResultList from '../components/SearchResult/SearchResultList';
-import Modal from '../components/Modal/Modal';
-import ImageArea from '../components/ImageArea/ImageArea';
-import Info from '../components/Info';
-import useDeckNames from '../hooks/useDeckNames';
-import useCurrentDeckNotes from '../hooks/useCurrentDeckNotes';
-import useSearchResult from '../hooks/useSearchResult';
-import useNotification from '../hooks/useNotification';
-import { NotificationType } from '../models/Notification';
-import VoiceArea from '../components/VoiceArea/VoiceArea';
-import useTranslation from '../hooks/useTranslation';
-import Translation from '../components/Translation/Translation';
+interface SearchResultPageProps {
+  keyword: string,
+  initialSearchResults: SearchResult[]
+}
 
-const Home: React.FC = () => {
-  const [keyword, setKeyword] = useState('');
+const SearchResultPage: React.FC<SearchResultPageProps> = ({
+  keyword: initialKeyWord, initialSearchResults,
+}) => {
+  const [keyword, setKeyword] = useState(initialKeyWord);
   const [showModal, setShowModal] = useState(false);
   const [isConnectedToAnki, setIsConnectedToAnki] = useState(false);
   const [currentDeckName, setCurrentDeckName] = useState<string | null>(typeof window !== 'undefined' ? localStorage.getItem('currentDeck') : null);
   const [showImageArea, setShowImageArea] = useState(false);
   const [showVoiceArea, setShowVoiceArea] = useState(false);
+  const [image, setImage] = useState<File | null>(null);
   const [showInfo, setShowInfo] = useState(true);
 
   const dispatch = useNotification();
@@ -35,7 +46,7 @@ const Home: React.FC = () => {
 
   const {
     data: searchResults, isLoading: isDictionaryLoading, refetch: fetchSearchResults,
-  } = useSearchResult(keyword, [], createErrorNotification);
+  } = useSearchResult(keyword, initialSearchResults, createErrorNotification);
 
   const {
     data: translationResults, isLoading: isTranslationLoading, refetch: fetchTranslation,
@@ -89,7 +100,7 @@ const Home: React.FC = () => {
           setShowInfo={setShowInfo}
         />
 
-        {showImageArea && <ImageArea setKeyword={setKeyword} />}
+        {showImageArea && <ImageArea image={image} setImage={setImage} setKeyword={setKeyword} />}
         {showVoiceArea && <VoiceArea />}
 
         <div className="grid md:grid-cols-4 grid-cols-1 gap-2">
@@ -116,4 +127,28 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default SearchResultPage;
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  // @ts-expect-error ignore for now
+  const { keyword } = context.params;
+  const initialSearchResults = await fetchInitialSearchResults(keyword);
+  return {
+    props: {
+      keyword,
+      initialSearchResults,
+    },
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths: { params: ParsedUrlQuery }[] = [];
+  wordList.forEach((word) => {
+    const path = { params: { keyword: word } };
+    paths.push(path);
+  });
+  return {
+    paths,
+    fallback: false,
+  };
+};

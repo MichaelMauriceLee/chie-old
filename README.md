@@ -30,14 +30,14 @@ This repo contains two components, both need to be running at the same time to u
 ```bash
 /api - Azure Functions project, runs on localhost:7071
 
-/client-api - Next js project, runs on localhost:3000
+/client-app - Next js project, runs on localhost:3000
 ```
 
-First, cd into /client-api and run the following commands to run the next.js project:
+First, cd into /client-app and run the following commands to run the next.js project:
 
 ```bash
-npm install
-npm run dev
+yarn install
+yarn dev
 ```
 
 Next, cd into /api and create a file called 'local.settings.json' and copy the following contents into that file and save (make sure to replace the values in {} with their actual value):
@@ -61,8 +61,8 @@ Next, cd into /api and create a file called 'local.settings.json' and copy the f
 Make sure to download, install and run Azure Storage Emulator.  Then run the following commands in the Azure Functions project root folder:
 
 ```bash
-npm install
-npm start
+yarn install
+yarn start
 ```
 
 Now navigate to localhost:3000 in your browser to use the site locally.

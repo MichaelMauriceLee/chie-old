@@ -5,7 +5,8 @@ interface ImageDisplayControlsProps {
   showWordBoundingBox: boolean;
   setShowLineBoundingBox: (params: boolean) => void;
   setShowWordBoundingBox: (params: boolean) => void;
-  setImage: (params: File | null) => void;
+  setFile: (params: File | null) => void;
+  setImage: (params: string | null) => void;
 }
 
 const ImageDisplayControls: React.FC<ImageDisplayControlsProps> = ({
@@ -14,6 +15,7 @@ const ImageDisplayControls: React.FC<ImageDisplayControlsProps> = ({
   setShowLineBoundingBox,
   setShowWordBoundingBox,
   setImage,
+  setFile,
 }) => {
   const toggleShowLineBoundingBox = () => {
     setShowLineBoundingBox(!showLineBoundingBox);
@@ -25,6 +27,7 @@ const ImageDisplayControls: React.FC<ImageDisplayControlsProps> = ({
 
   const clearImage = () => {
     setImage(null);
+    setFile(null);
   };
 
   return (

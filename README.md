@@ -58,7 +58,7 @@ Next, cd into /api and create a file called 'local.settings.json' and copy the f
 }
 ```
 
-Make sure to download, install and run Azure Storage Emulator.  Then run the following commands in the Azure Functions project root folder:
+Make sure to download, install and run Azurite (you need it to emulate storage needed to store the compiled functions).  Then run the following commands in the Azure Functions project root folder:
 
 ```bash
 yarn install
@@ -66,3 +66,13 @@ yarn start
 ```
 
 Now navigate to localhost:3000 in your browser to use the site locally.
+
+## Storybook
+
+Storybook is an open source tool that allows for building UI components and pages in isolation, as well as acting as an interactive UI style guide.
+
+Navigate to client-app and run the following command:
+
+```bash
+yarn storybook
+```

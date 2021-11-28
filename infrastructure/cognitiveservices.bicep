@@ -20,3 +20,7 @@ resource translatorAccount 'Microsoft.CognitiveServices/accounts@2021-04-30' = {
   location: location
   kind: 'Translator'
 }
+
+output computerVisionAcountKey object = listKeys(computerVisionAccountName, '2021-04-30')
+output speechServiceAccountKey object = listKeys(speechServiceAccountName, '2021-04-30')
+output translatorAccountKey object = listKeys(translatorAccountName, '2021-04-30')

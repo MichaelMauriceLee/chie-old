@@ -15,7 +15,7 @@ resource computerVisionAccount 'Microsoft.CognitiveServices/accounts@2021-04-30'
 resource speechServiceAccount 'Microsoft.CognitiveServices/accounts@2021-04-30' = {
   name: speechServiceAccountName
   location: location
-  kind: 'Speech'
+  kind: 'SpeechServices'
   sku: {
     name: 'F0'
   }

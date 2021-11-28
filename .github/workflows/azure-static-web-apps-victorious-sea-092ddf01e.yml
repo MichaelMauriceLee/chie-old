@@ -32,30 +32,6 @@ jobs:
           output_location: "out" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
 
-      - name: Initialize Test Variables
-        shell: bash
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-        run: |
-          CYPRESS_BASE_URL="https://victorious-sea-092ddf01e.azurestaticapps.net"
-          if [ -n "${{ github.event.pull_request.number }}" ]; then CYPRESS_BASE_URL="https://victorious-sea-092ddf01e-${{ github.event.pull_request.number }}.westus2.azurestaticapps.net" ; fi
-          echo "::set-env name=CYPRESS_BASE_URL::${CYPRESS_BASE_URL}"
-
-      - name: Cypress Install
-        uses: cypress-io/github-action@v2
-        with:
-          runTests: false
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-
-      - name: Run Cypress E2E Tests
-        uses: cypress-io/github-action@v2
-        with:
-          install: false
-          working-directory: client-app
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest

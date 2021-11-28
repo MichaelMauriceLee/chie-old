@@ -32,15 +32,15 @@ jobs:
           output_location: "out" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
 
-      # - name: Initialize test variables
-      #   shell: bash
-      #   run: |
-      #     CYPRESS_BASE_URL="https://chie.app"
-      #     if [ -n "${{ github.event.pull_request.number }}" ]; then CYPRESS_BASE_URL="https://lively-sky-0c3feb303-${{ github.event.pull_request.number }}.westeurope.azurestaticapps.net" ; fi
-      #     echo "::set-env name=CYPRESS_BASE_URL::${CYPRESS_BASE_URL}"
+      - name: Initialize test variables
+        shell: bash
+        run: |
+          CYPRESS_BASE_URL="https://victorious-sea-092ddf01e.azurestaticapps.net"
+          if [ -n "${{ github.event.pull_request.number }}" ]; then CYPRESS_BASE_URL="https://victorious-sea-092ddf01e-${{ github.event.pull_request.number }}.westus2.azurestaticapps.net" ; fi
+          echo "::set-env name=CYPRESS_BASE_URL::${CYPRESS_BASE_URL}"
 
-      # - name: Cypress E2E Tests
-      #   uses: cypress-io/github-action@v1
+      - name: Cypress E2E Tests
+        uses: cypress-io/github-action@v1
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'

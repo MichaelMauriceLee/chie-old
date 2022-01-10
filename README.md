@@ -1,3 +1,6 @@
+## WHY?
+I forked this repo for fun and profit!!
+
 ## Setup
 
 Follow the instructions to install AnkiConnect here:

@@ -2,7 +2,7 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions';
 import axios from 'axios';
 
-const analyzeImageUrl = `https://${process.env.CV_NAME}.cognitiveservices.azure.com/vision/v3.2-preview.3/read/analyze?language=ja`;
+const analyzeImageUrl = `https://${process.env.CV_NAME}.cognitiveservices.azure.com/vision/v3.2/read/analyze?language=ja`;
 
 const httpTrigger: AzureFunction = async (context: Context, req: HttpRequest): Promise<void> => {
   const buffer = Buffer.from(req.body.image.split(',')[1], 'base64');

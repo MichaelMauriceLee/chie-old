@@ -2,7 +2,7 @@
 import { AzureFunction, Context } from '@azure/functions';
 import axios from 'axios';
 
-const analysisResultsUrl = `https://${process.env.CV_NAME}.cognitiveservices.azure.com/vision/v3.2-preview.3/read/analyzeResults`;
+const analysisResultsUrl = `https://${process.env.CV_NAME}.cognitiveservices.azure.com/vision/v3.2/read/analyzeResults`;
 
 const httpTrigger: AzureFunction = async (context: Context): Promise<void> => {
   if (!context.bindingData.analysisId) {

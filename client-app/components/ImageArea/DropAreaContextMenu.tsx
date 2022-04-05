@@ -19,13 +19,17 @@ const DropAreaContextMenu: React.FC<DropAreaContextMenuProps> = ({ setFile }) =>
 
   if (show) {
     return (
-      <ul className="menu" style={{ top: anchorPoint.y, left: anchorPoint.x }}>
-        <li>
-          <button type="button" onClick={onClick}>
-            Paste image from clipboard
-          </button>
-        </li>
-      </ul>
+      <div
+        className="absolute p-4 m-0 border-2 border-black w-50 hover:bg-red-500 bg-white"
+        style={{ top: anchorPoint.y, left: anchorPoint.x + 10 }}
+      >
+        <button
+          type="button"
+          onClick={onClick}
+        >
+          Paste image from clipboard
+        </button>
+      </div>
     );
   }
   return <></>;
